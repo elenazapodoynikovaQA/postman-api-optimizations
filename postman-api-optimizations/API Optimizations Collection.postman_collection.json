@@ -1,0 +1,296 @@
+{
+	"info": {
+		"_postman_id": "d44c4d0d-152d-49bf-9fd4-89da50eaea55",
+		"name": "API Optimizations Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43997631",
+		"_collection_link": "https://interstellar-crescent-9032764.postman.co/workspace/%D0%95%D0%BB%D0%B5%D0%BD%D0%B0's-Workspace~992168f2-4845-4f9b-88f1-71a0fa76f878/collection/43997631-d44c4d0d-152d-49bf-9fd4-89da50eaea55?action=share&source=collection_link&creator=43997631"
+	},
+	"item": [
+		{
+			"name": "GET /organizations/{organization_id}/optimizations - valid token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response has expected structure\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.be.an('object');",
+							"    pm.expect(jsonData).to.have.property(\"optimizations\");",
+							"    pm.expect(jsonData.optimizations).to.be.an('object');",
+							"    pm.expect(jsonData).to.have.property(\"total_saving\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/restapi/v2/organizations/{{organization_id}}/optimizations",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"restapi",
+						"v2",
+						"organizations",
+						"{{organization_id}}",
+						"optimizations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /optimizations - Invalid Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer invalid_token",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/restapi/v2/organizations/{{organization_id}}/optimizations",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"restapi",
+						"v2",
+						"organizations",
+						"{{organization_id}}",
+						"optimizations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /optimizations - Without Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401 (no token)\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/restapi/v2/organizations/{{organization_id}}/optimizations",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"restapi",
+						"v2",
+						"organizations",
+						"{{organization_id}}",
+						"optimizations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /optimizations - Nonexistent Organization ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/restapi/v2/organizations/00000000-0000-0000-0000-000000000000/optimizations",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"restapi",
+						"v2",
+						"organizations",
+						"00000000-0000-0000-0000-000000000000",
+						"optimizations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /optimizations - Invalid Organization ID Format",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400 or 404 (invalid format)\", function () {",
+							"    pm.expect([400, 404]).to.include(pm.response.code);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/restapi/v2/organizations/abc123/optimizations",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"restapi",
+						"v2",
+						"organizations",
+						"abc123",
+						"optimizations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /optimizations - Forbidden Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 403\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{forbidden_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/restapi/v2/organizations/{{organization_id}}/optimizations",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"restapi",
+						"v2",
+						"organizations",
+						"{{organization_id}}",
+						"optimizations"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://84.201.166.215",
+			"type": "string"
+		},
+		{
+			"key": "organization_id\t",
+			"value": "01189c44-5f30-4e7b-8e20-addb3aa8b569",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "MDAwZWxvY2F0aW9uIAowMDM0aWRlbnRpZmllciBlMmRkZWUyNi1kM2I5LTQ2ZTEtYjc2MS04M2U2NzFlNTBhZjUKMDAyM2NpZCBjcmVhdGVkOjE3NTE2MjYzOTIuMzI0NjkwMwowMDE3Y2lkIHJlZ2lzdGVyOkZhbHNlCjAwMWFjaWQgcHJvdmlkZXI6b3B0c2NhbGUKMDAyZnNpZ25hdHVyZSC3nZlFo0puU2ScWzzzxfstmMXEAiwpHIWJ15gQJ8Rz_Qo",
+			"type": "string"
+		},
+		{
+			"value": "\n",
+			"type": "string"
+		}
+	]
+}
