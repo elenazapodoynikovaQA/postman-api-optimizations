@@ -1,7 +1,7 @@
 # postman-api-optimizations
 Коллекция в Postman для ее тестирования (API: GET {url}/restapi/v2/organizations/{organization_id}/optimizations)
 <img width="2066" height="1504" alt="скриншотик" src="https://github.com/user-attachments/assets/40bb8f3a-f6f6-4efa-a74f-bbde0357b69e" />
-Высылаем тестовое задание.
+
 Проанализировать API, написать чеклист в свободной форме и составить коллекцию в Postman для ее тестирования (проверяются твои навыки анализа, умения составлять тестовую документацию и работы в Postman (+ pre/post-scripts))
 
 Доступ к описанию: https://84.201.166.215/restapi/v2/swagger/spec.html#/
